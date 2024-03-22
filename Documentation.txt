@@ -1,0 +1,70 @@
+DOCUMENTATION OF REAL TIME CHATTING APPLICATION
+
+TECH STACKS INVOLVED:
+1. Nodejs
+2. Expressjs
+3. React
+4. 
+
+step1: PROJECT SETUP
+
+- setup react for frontend handling using nodejs.
+- Created a runtime environment for javascript for backend using nodejs.
+- backend equipped with framewords: expressjs for coding server functionalities, mongoose ofr handling mongodb connections and operations, socket.io for handling real-time message conveying.
+- installed nodemon for seeing changes immediately done to server, there is no need to restart server everytime a change is being made.
+- dotenv package to load environment variables from a .env file into process.env. This makes it easy to access these variables throughout your application. To use dotenv, you first need to install it via npm
+- The .env file is a simple text file used to store environment variables for your application.
+
+step2: AUTHENTICATION ROUTES SETUP:
+Setting up an authentication route involves creating endpoints in your application that handle user authentication tasks such as user login, user registration, logout, password reset, etc. These routes typically interact with a database or an authentication service to perform authentication-related operations.
+
+- instead of creating separate authetication routes, we made a middleware (auth.route.js) that will help us making code organized and the routes will be saves here separately.
+- this file is being imported in the main server.js
+- then in auth.route.js>> we will create separate route calls. but it will make this file unorganized if we create all the functions of those route calls here .
+- so another folder called controllers will be created in backend folder.
+- now controller will have the functions that will be performed when those route calls are being made.
+- those controllers should be exported in the auth.route.js to make them available to call.
+- Postman workspaces themselves are not used to create APIs from scratch. Instead, Postman is primarily a tool for testing, documenting, and managing APIs. However, Postman workspaces play a crucial role in the API development lifecycle by providing a collaborative environment where teams can work together on various aspects of API development, including testing, documentation, and organization.
+
+step3 : SETTING UP OF MONGODB
+
+-using the cloud mongodb
+-created a cluster and used the url and password for connecting to mongodb and storing user data
+
+step4 :	USER MODEL CREATION
+
+- its basically creation of what model of data will be stored to mongodb. what will be the basic schema. 
+
+step 5: SIGNUP ENDPOINT
+
+- Now we add functionality in the signup route (controllers)
+- used avatars for profile pic.
+- those details will be provided by user and saved to database (mongodb)
+- as users will enter their passwords they need to be encrpted using bycrypt 
+- we will hash the password so that no one can get passwords from the database also if it is hindered by some unauthorized one.
+
+step 6: JWT: uses of JWT is for authentication. After a user logs in, a JWT can be issued containing information about the user (such as their user ID, username, or roles). This JWT can then be sent with subsequent requests to authenticate the user and grant them access to protected resources without needing to send their credentials with each request.
+
+- setting up jsonWebToken for each user log and with time span of 15days that is it will be EXPIRED after 15 days of login.
+- when a user registers/signups a webToken creates that has a session of 15day, that within those days that user should able to access the app without id and password again and again
+- specified the security like it would not be accesed by authorized user only
+
+step7: LOGIN ENDPOINT
+- now the controller function for login will be created.
+- it takes username and password from the request body, and checks if the password is correct or not.
+- and also checks if the username entered is an existing one or not.
+- if found then only res will have the usercredentials otherwise given error that invalid credentials are being entered.
+
+step8: LOGOUT ENDPOINT
+- Inside the try block, the code performs the logout operation. It clears the JWT (JSON Web Token) cookie by setting its value to an empty string and sets its maxAge property to 0, effectively expiring the cookie.
+- In the context of the provided code snippet, the JWT (JSON Web Token) cookie is being expired by setting its maxAge property to 0. This means that the cookie will immediately expire as soon as it's set, effectively instructing the browser to delete the cookie.
+
+- By expiring the cookie, the server effectively logs out the user because subsequent requests made by the user's browser will not include the JWT cookie. This prevents the user from being authenticated or authorized for any protected resources on the server.
+
+step8: MESSAGE MODEL
+- WE WILL CREATE a message db and conversation db where, in message db it will have an unique id and senderId, recieverId and message.
+- while conversation db wil have its unique id, array of participants conversating, and array of message id (conversation is like personal room of participants messaging independently
+
+step9: MESSAGE ENDPOINT
+- Create a message endpoint where the api will recieve the id of receiver from logged in id and with message, message will be stored in message db and particular pair convo will be saved in conversation db.
+
