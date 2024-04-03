@@ -15,19 +15,22 @@ export const SocketContextProvider = ({ children }) => {
 
 	useEffect(() => {
 		if (authUser) {
-			const socket = io("http://localhost:3000", {
+			const socket = io("http://localhost:5000", {
 				query: {
 					userId: authUser._id,
 				},
 			});
-
+	
 			setSocket(socket);
-
-			// socket.on() is used to listen to the events. can be used both on client and server side
+	
 			socket.on("getOnlineUsers", (users) => {
 				setOnlineUsers(users);
 			});
-
+	
+			socket.on("receiveMessage", (message) => {
+				// Handle received message, e.g., update state with the new message
+			});
+	
 			return () => socket.close();
 		} else {
 			if (socket) {
@@ -36,6 +39,7 @@ export const SocketContextProvider = ({ children }) => {
 			}
 		}
 	}, [authUser]);
+	
 
 	return <SocketContext.Provider value={{ socket, onlineUsers }}>{children}</SocketContext.Provider>;
 };
